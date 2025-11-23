@@ -648,11 +648,10 @@ SELECT username, password_hash FROM users;
 **Resultado:**
 
 ```
-<img width="1421" height="415" alt="image" src="https://github.com/user-attachments/assets/182e777a-d806-45f6-822f-f58bff452c63" />
-
 comprador|$2b$10$rZX7GqHkF3qJt9Sw5Lv8XeN...
 vendedor|$2b$10$hT9Kp2Lm8Nq1Rr7Ss4Vv9Ww...
 ```
+<img width="1421" height="415" alt="Screenshot 2025-11-23 102357" src="https://github.com/user-attachments/assets/4cd3b080-9e1d-424f-a0c6-9760b6a1664a" />
 
 ✅ **Verificación:** 
 - El hash comienza con `$2b$10$` (bcrypt con 10 rounds)
@@ -670,9 +669,8 @@ SELECT payment_info_encrypted FROM transactions LIMIT 1;
 ```
 
 **Resultado:**
-
-```
 <img width="1364" height="330" alt="image" src="https://github.com/user-attachments/assets/b12c8423-e19b-45b0-ba92-54e384e486a8" />
+```
 
 ```
 
@@ -718,9 +716,10 @@ node
 > crypto.verifySignature(cert, signature, publicKey);
 true  // ✓ Firma válida
 
-<img width="833" height="829" alt="Screenshot 2025-11-23 022556" src="https://github.com/user-attachments/assets/3ba7b301-9558-4c27-8094-e0708d4d5a32" />
+
 
 ```
+<img width="833" height="829" alt="Screenshot 2025-11-23 022556" src="https://github.com/user-attachments/assets/3ba7b301-9558-4c27-8094-e0708d4d5a32" />
 
 ✅ **Verificación:**
 - La firma es única para cada certificado
