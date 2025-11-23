@@ -2,6 +2,14 @@
 
 Marketplace de compra-venta de arte digital que implementa 4 capas fundamentales de seguridad criptográfica para proteger la información sensible de compradores, vendedores y garantizar la autenticidad de las transferencias de derechos digitales.
 
+<img width="1434" height="760" alt="image" src="https://github.com/user-attachments/assets/b21bd0d6-c769-46f0-a245-a6adff29b651" />
+
+
+<img width="1615" height="781" alt="image" src="https://github.com/user-attachments/assets/3162b5ae-f68e-415c-a075-949e23431e36" />
+
+
+<img width="1251" height="862" alt="image" src="https://github.com/user-attachments/assets/94830df1-0126-4461-8b26-b08669a944f7" />
+
 ---
 
 ## 📋 Tabla de Contenidos
