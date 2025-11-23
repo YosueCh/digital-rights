@@ -1,0 +1,52 @@
+🚀 GUÍA RÁPIDA - Digital Rights
+
+═══════════════════════════════════════════════════════════
+ INICIAR PROYECTO
+
+Terminal 1 (Backend):
+  cd backend
+  npm run dev
+  
+  ✅ Servidor en http://localhost:3000
+
+Terminal 2 (Frontend):
+  cd frontend
+  npm run dev
+  
+  ✅ App en http://localhost:5173
+
+═══════════════════════════════════════════════════════════
+
+CREDENCIALES DE PRUEBA
+
+Vendedor:
+  Email: vendedor@digitalrights.com
+  Pass:  vendedor123
+
+Comprador:
+  Email: comprador@digitalrights.com
+  Pass:  comprador123
+
+Admin:
+  Email: admin@digitalrights.com
+  Pass:  admin123
+
+═══════════════════════════════════════════════════════════
+
+FLUJO DE DEMOSTRACIÓN
+
+1. Login (CAPA 1: Bcrypt)
+2. Comprar obra (CAPA 2: AES-256)
+3. Firmar transferencia (CAPA 3: RSA)
+4. Descarga segura (CAPA 4: Híbrido)
+5. Ver Panel Demo (Todas las capas)
+
+═══════════════════════════════════════════════════════════
+
+DOCUMENTACIÓN
+
+- README.md
+- ARQUITECTURA.md (en conversación, BLOQUE 10)
+- DEMOSTRACION.md (en conversación, BLOQUE 10)
+
+═══════════════════════════════════════════════════════════

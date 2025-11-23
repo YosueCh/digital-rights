@@ -1,0 +1,42 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Variables de entorno
+.env
+.env.local
+
+# Base de datos
+*.db
+*.sqlite
+*.sqlite3
+
+# Llaves privadas
+backend/keys/*.pem
+backend/keys/*.key
+!backend/keys/.gitkeep
+!backend/keys/README.md
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Build
+frontend/dist/
+frontend/build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+logs/
