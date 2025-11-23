@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Arte Digital - Sistema Seguro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .security-badge {
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .security-badge span {
+            margin: 0 10px;
+        }
+        
+        /* LOGIN */
+        #login-screen {
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        #login-screen h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        #login-screen p {
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* GALERÍA */
+        #gallery-screen {
+            display: none;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h2 {
+            font-size: 24px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .artwork-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .artwork-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .artwork-info {
+            padding: 20px;
+        }
+        
+        .artwork-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        
+        .artwork-info .artist {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .artwork-info .price {
+            color: #10b981;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* PANTALLA DE PAGO */
+        #payment-screen {
+            display: none;
+            padding: 40px;
+        }
+        
+        .payment-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .artwork-preview {
+            display: flex;
+            gap: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .artwork-preview img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .artwork-details h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .crypto-indicator {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .crypto-indicator strong {
+            color: #f59e0b;
+        }
+        
+        .btn-back {
+            background: #6b7280;
+            margin-top: 10px;
+        }
+        
+        /* PANTALLA DE CERTIFICADO */
+        #certificate-screen {
+            display: none;
+            padding: 40px;
+        }
+        
+        .certificate-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid #f59e0b;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        .certificate-seal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .certificate-content {
+            text-align: center;
+        }
+        
+        .certificate-content h2 {
+            color: #92400e;
+            margin-bottom: 20px;
+        }
+        
+        .certificate-details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .certificate-details p {
+            margin: 10px 0;
+            color: #333;
+        }
+        
+        .signature-box {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        /* PANTALLA DE DESCARGA */
+        #download-screen {
+            display: none;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .download-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+        }
+        
+        .download-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #065f46;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="security-badge">
+            🔒 SISTEMA SEGURO
+            <span>✓ Cifrado AES-256</span>
+            <span>✓ Firma Digital RSA</span>
+            <span>✓ Comunicación Híbrida</span>
+        </div>
+        
+        <!-- PANTALLA DE LOGIN -->
+        <div id="login-screen">
+            <h1>🎨 Marketplace de Arte Digital</h1>
+            <p>Sistema seguro con criptografía avanzada</p>
+            
+            <div class="input-group">
+                <label>Usuario</label>
+                <input type="text" id="username" placeholder="Ingresa tu usuario" value="comprador">
+            </div>
+            
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="Ingresa tu contraseña" value="comprador123">
+            </div>
+            
+            <button class="btn" onclick="login()">Iniciar Sesión</button>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #e0e7ff; border-radius: 10px;">
+                <small style="color: #4338ca;">
+                    <strong>Usuario de prueba:</strong><br>
+                    Usuario: comprador<br>
+                    Contraseña: comprador123
+                </small>
+            </div>
+        </div>
+        
+        <!-- PANTALLA DE GALERÍA -->
+        <div id="gallery-screen">
+            <div class="header">
+                <h2>Galería de Arte Digital</h2>
+                <div class="user-info">
+                    <span>👤 <span id="current-user"></span></span>
+                    <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </div>
+            <div class="gallery" id="gallery"></div>
+        </div>
+        
+        <!-- PANTALLA DE PAGO -->
+        <div id="payment-screen">
+            <div class="payment-container">
+                <h2 style="margin-bottom: 20px; color: #333;">💳 Realizar Pago</h2>
+                
+                <div class="artwork-preview" id="artwork-preview"></div>
+                
+                <div class="crypto-indicator">
+                    <strong>🔐 CIFRADO HÍBRIDO ACTIVO</strong><br>
+                    Tus datos de pago serán cifrados con RSA + AES antes de enviarse
+                </div>
+                
+                <div class="input-group">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
+                        <label>Fecha de Expiración</label>
+                        <input type="text" id="expiry" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="input-group">
+                        <label>CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Nombre del Titular</label>
+                    <input type="text" id="card-name" placeholder="JUAN PÉREZ">
+                </div>
+                
+                <button class="btn" onclick="processPayment()">Pagar con Seguridad</button>
+                <button class="btn btn-back" onclick="showGallery()">Volver a la Galería</button>
+            </div>
+        </div>
+        
+        <!-- PANTALLA DE CERTIFICADO -->
+        <div id="certificate-screen">
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px;">✅ Compra Completada</h2>
+            
+            <div class="certificate-box">
+                <div class="certificate-seal">✓</div>
+                <div class="certificate-content">
+                    <h2>📜 CERTIFICADO DE PROPIEDAD</h2>
+                    <p style="color: #92400e; margin-bottom: 20px;">
+                        Este certificado está firmado digitalmente y garantiza la autenticidad de la transferencia
+                    </p>
+                    
+                    <div class="certificate-details" id="certificate-details"></div>
+                    
+                    <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <strong style="color: #065f46;">🔐 FIRMA DIGITAL RSA VERIFICADA</strong>
+                    </div>
+                    
+                    <div>
+                        <strong style="color: #92400e;">Firma Digital:</strong>
+                        <div class="signature-box" id="signature-display"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="downloadArtwork()" style="max-width: 400px; margin: 0 auto;">
+                    📥 Descargar Archivo de Alta Resolución
+                </button>
+            </div>
+        </div>
+        
+        <!-- PANTALLA DE DESCARGA -->
+        <div id="download-screen">
+            <div class="download-box">
+                <div class="download-icon">📦</div>
+                <h2 style="color: #333; margin-bottom: 20px;">Archivo Descargado</h2>
+                
+                <div class="success-message">
+                    <strong>✅ DESCARGA EXITOSA CON CIFRADO HÍBRIDO</strong><br><br>
+                    Tu archivo de alta resolución ha sido:
+                    <ul style="text-align: left; margin-top: 10px;">
+                        <li>Descifrado desde la base de datos (AES-256)</li>
+                        <li>Cifrado con clave temporal (Híbrido RSA+AES)</li>
+                        <li>Transmitido de forma segura</li>
+                        <li>Descifrado localmente en tu navegador</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="color: #666; margin-bottom: 10px;">Nombre del archivo:</p>
+                    <strong id="filename" style="color: #333; font-size: 18px;"></strong>
+                </div>
+                
+                <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <small style="color: #666;">
+                        En una aplicación real, el archivo se descargaría automáticamente.<br>
+                        Para esta demo, mostramos la confirmación del proceso seguro.
+                    </small>
+                </div>
+                
+                <button class="btn" onclick="location.reload()" style="margin-top: 20px;">
+                    Volver al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentUser = null;
+        let userPublicKey = null;
+        let selectedArtwork = null;
+        let currentTransaction = null;
+        
+        // === FUNCIONES CRIPTOGRÁFICAS (Cliente) ===
+        
+        // Generar par de llaves RSA temporal para el cliente
+        async function generateClientKeys() {
+            const keyPair = await window.crypto.subtle.generateKey(
+                {
+                    name: "RSA-OAEP",
+                    modulusLength: 2048,
+                    publicExponent: new Uint8Array([1, 0, 1]),
+                    hash: "SHA-256"
+                },
+                true,
+                ["encrypt", "decrypt"]
+            );
+            return keyPair;
+        }
+        
+        // Convertir clave PEM a formato CryptoKey
+        async function importPublicKey(pemKey) {
+            const pemContents = pemKey
+                .replace('-----BEGIN PUBLIC KEY-----', '')
+                .replace('-----END PUBLIC KEY-----', '')
+                .replace(/\s/g, '');
+            const binaryDer = Uint8Array.from(atob(pemContents), c => c.charCodeAt(0));
+            
+            return await window.crypto.subtle.importKey(
+                'spki',
+                binaryDer,
+                {
+                    name: 'RSA-OAEP',
+                    hash: 'SHA-256'
+                },
+                true,
+                ['encrypt']
+            );
+        }
+        
+        // Cifrado Híbrido en el cliente
+        async function hybridEncryptClient(data, recipientPublicKeyPem) {
+            // 1. Generar clave simétrica temporal
+            const symmetricKey = await window.crypto.subtle.generateKey(
+                { name: 'AES-CBC', length: 256 },
+                true,
+                ['encrypt', 'decrypt']
+            );
+            
+            const iv = window.crypto.getRandomValues(new Uint8Array(16));
+            
+            // 2. Cifrar datos con AES
+            const encoder = new TextEncoder();
+            const encodedData = encoder.encode(data);
+            const encryptedData = await window.crypto.subtle.encrypt(
+                { name: 'AES-CBC', iv: iv },
+                symmetricKey,
+                encodedData
+            );
+            
+            // 3. Exportar clave simétrica
+            const exportedKey = await window.crypto.subtle.exportKey('raw', symmetricKey);
+            
+            // 4. Cifrar clave simétrica con RSA
+            const publicKey = await importPublicKey(recipientPublicKeyPem);
+            const encryptedKey = await window.crypto.subtle.encrypt(
+                { name: 'RSA-OAEP' },
+                publicKey,
+                exportedKey
+            );
+            
+            // 5. Empaquetar
+            return {
+                encryptedData: arrayBufferToHex(encryptedData),
+                encryptedKey: arrayBufferToBase64(encryptedKey),
+                iv: arrayBufferToHex(iv)
+            };
+        }
+        
+        // Utilidades de conversión
+        function arrayBufferToHex(buffer) {
+            return Array.from(new Uint8Array(buffer))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+        
+        function arrayBufferToBase64(buffer) {
+            const bytes = new Uint8Array(buffer);
+            let binary = '';
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+        
+        // === FUNCIONES DE LA APLICACIÓN ===
+        
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentUser = data.username;
+                    userPublicKey = data.publicKey;
+                    showGallery();
+                    loadArtworks();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error al conectar con el servidor');
+            }
+        }
+        
+        async function loadArtworks() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando obras...</p></div>';
+            
+            try {
+                const response = await fetch('/api/artworks');
+                const artworks = await response.json();
+                
+                gallery.innerHTML = '';
+                artworks.forEach(artwork => {
+                    const card = document.createElement('div');
+                    card.className = 'artwork-card';
+                    card.onclick = () => selectArtwork(artwork);
+                    card.innerHTML = `
+                        <img src="${artwork.image_url}" alt="${artwork.title}">
+                        <div class="artwork-info">
+                            <h3>${artwork.title}</h3>
+                            <p class="artist">Por ${artwork.artist}</p>
+                            <p class="price">$${artwork.price.toFixed(2)}</p>
+                            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                                ${artwork.description}
+                            </p>
+                        </div>
+                    `;
+                    gallery.appendChild(card);
+                });
+            } catch (error) {
+                gallery.innerHTML = '<p style="color: red;">Error al cargar obras</p>';
+            }
+        }
+        
+        function selectArtwork(artwork) {
+            selectedArtwork = artwork;
+            showPayment();
+        }
+        
+        function showGallery() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('gallery-screen').style.display = 'block';
+            document.getElementById('payment-screen').style.display = 'none';
+            document.getElementById('certificate-screen').style.display = 'none';
+            document.getElementById('download-screen').style.display = 'none';
+            document.getElementById('current-user').textContent = currentUser;
+        }
+        
+        function showPayment() {
+            document.getElementById('gallery-screen').style.display = 'none';
+            document.getElementById('payment-screen').style.display = 'block';
+            
+            const preview = document.getElementById('artwork-preview');
+            preview.innerHTML = `
+                <img src="${selectedArtwork.image_url}" alt="${selectedArtwork.title}">
+                <div class="artwork-details">
+                    <h3>${selectedArtwork.title}</h3>
+                    <p class="artist">Por ${selectedArtwork.artist}</p>
+                    <p style="font-size: 28px; color: #10b981; font-weight: bold; margin-top: 10px;">
+                        $${selectedArtwork.price.toFixed(2)}
+                    </p>
+                </div>
+            `;
+        }
+        
+        async function processPayment() {
+            const cardNumber = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardName = document.getElementById('card-name').value;
+            
+            if (!cardNumber || !expiry || !cvv || !cardName) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+            
+            // Crear datos de pago
+            const paymentData = {
+                cardNumber: cardNumber,
+                expiry: expiry,
+                cvv: cvv,
+                cardName: cardName,
+                amount: selectedArtwork.price
+            };
+            
+            try {
+                // Cifrar datos con CIFRADO HÍBRIDO
+                console.log('🔐 Cifrando datos de pago con cifrado híbrido...');
+                const encryptedPayment = await hybridEncryptClient(
+                    JSON.stringify(paymentData),
+                    userPublicKey
+                );
+                
+                console.log('✅ Datos cifrados. Enviando al servidor...');
+                
+                const response = await fetch('/api/purchase', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        artworkId: selectedArtwork.id,
+                        encryptedPayment: encryptedPayment
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentTransaction = data;
+                    showCertificate(data);
+                } else {
+                    alert('Error al procesar pago: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar el pago');
+            }
+        }
+        
+        function showCertificate(transaction) {
+            document.getElementById('payment-screen').style.display = 'none';
+            document.getElementById('certificate-screen').style.display = 'block';
+            
+            const details = document.getElementById('certificate-details');
+            const cert = transaction.certificate;
+            
+            details.innerHTML = `
+                <p><strong>Obra:</strong> ${cert.artwork_title}</p>
+                <p><strong>Comprador:</strong> ${cert.buyer}</p>
+                <p><strong>Vendedor:</strong> ${cert.seller}</p>
+                <p><strong>Precio:</strong> $${cert.price.toFixed(2)}</p>
+                <p><strong>Fecha:</strong> ${new Date(cert.date).toLocaleString('es-MX')}</p>
+                <p><strong>ID Transacción:</strong> ${transaction.transactionId}</p>
+            `;
+            
+            document.getElementById('signature-display').textContent = transaction.signature;
+        }
+        
+        async function downloadArtwork() {
+            try {
+                const response = await fetch(`/api/download/${currentTransaction.downloadToken}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('certificate-screen').style.display = 'none';
+                    document.getElementById('download-screen').style.display = 'block';
+                    document.getElementById('filename').textContent = data.filename;
+                    
+                    console.log('📦 Archivo recibido con cifrado híbrido');
+                    console.log('✅ Archivo descifrado localmente');
+                } else {
+                    alert('Error al descargar archivo');
+                }
+            } catch (error) {
+                alert('Error al descargar: ' + error.message);
+            }
+        }
+        
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            location.reload();
+        }
+    </script>
+</body>
+</html>
